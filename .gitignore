@@ -1,0 +1,7 @@
+# Ustawienia lokalne narzędzi
+.claude/
+
+# Eksporty / pliki tymczasowe
+*.pdf
+*.bak
+*.tmp

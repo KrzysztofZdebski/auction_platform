@@ -58,9 +58,15 @@ GRANT SELECT ON kategorie, producenci, produkty, metody_platnosci TO rola_gosc;
 GRANT SELECT ON widok_aktywne_aukcje,
                 widok_ranking_sprzedajacych,
                 widok_statystyki_kategorii,
-                widok_profil_uzytkownika,
-                widok_historia_ofert
+                widok_profil_uzytkownika
       TO rola_gosc;
+
+-- Historia ofert: gość widzi kwotę i czas, ale NIE tożsamość licytującego
+-- (kolumna `licytujacy` celowo pominięta w GRANT). Pełny widok dostają
+-- zalogowani — rola_kupujacy i wyżej.
+GRANT SELECT (oferta_id, aukcja_id, produkt, kwota, data_zlozenia, pozycja)
+      ON widok_historia_ofert TO rola_gosc;
+GRANT SELECT ON widok_historia_ofert TO rola_kupujacy;
 
 -- ----------------------------------------------------------------------------
 --  ROLA_KUPUJACY — przegląd aukcji i licytowanie (dziedziczy gościa).
@@ -141,6 +147,8 @@ END$$;
 --  SELECT * FROM widok_aktywne_aukcje LIMIT 3;          -- OK
 --  SELECT * FROM widok_profil_uzytkownika LIMIT 3;       -- OK (bez haslo_hash)
 --  SELECT haslo_hash FROM uzytkownicy LIMIT 1;           -- BŁĄD: permission denied
+--  SELECT kwota, data_zlozenia FROM widok_historia_ofert LIMIT 3;  -- OK
+--  SELECT licytujacy FROM widok_historia_ofert LIMIT 1; -- BŁĄD: permission denied for column
 --  RESET ROLE;
 --
 --  -- Kupujący nie może wystawić aukcji:

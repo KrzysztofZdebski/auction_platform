@@ -152,15 +152,17 @@ DECLARE
     v_dane       JSONB;
     v_id_rekordu TEXT;
 BEGIN
+    -- ponytail: `- 'haslo_hash'` usuwa skrót hasła z zapisu audytowego
+    -- (no-op dla tabel bez tej kolumny). Skrót nigdy nie trafia do dziennik_zmian.
     IF TG_OP = 'INSERT' THEN
-        v_dane       := to_jsonb(NEW);
+        v_dane       := to_jsonb(NEW) - 'haslo_hash';
         v_id_rekordu := v_dane ->> 'id';
     ELSIF TG_OP = 'UPDATE' THEN
-        v_dane       := jsonb_build_object('stare', to_jsonb(OLD),
-                                           'nowe',  to_jsonb(NEW));
+        v_dane       := jsonb_build_object('stare', to_jsonb(OLD) - 'haslo_hash',
+                                           'nowe',  to_jsonb(NEW) - 'haslo_hash');
         v_id_rekordu := to_jsonb(NEW) ->> 'id';
     ELSE  -- DELETE
-        v_dane       := to_jsonb(OLD);
+        v_dane       := to_jsonb(OLD) - 'haslo_hash';
         v_id_rekordu := v_dane ->> 'id';
     END IF;
 

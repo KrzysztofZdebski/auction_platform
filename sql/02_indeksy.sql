@@ -19,7 +19,6 @@ CREATE INDEX idx_produkty_producent      ON produkty(producent_id);
 CREATE INDEX idx_aukcje_produkt          ON aukcje(produkt_id);
 CREATE INDEX idx_aukcje_sprzedajacy      ON aukcje(sprzedajacy_id);
 CREATE INDEX idx_aukcje_zwyciezca        ON aukcje(zwyciezca_id);
-CREATE INDEX idx_oferty_aukcja           ON oferty(aukcja_id);
 CREATE INDEX idx_oferty_kupujacy         ON oferty(kupujacy_id);
 CREATE INDEX idx_transakcje_kupujacy     ON transakcje(kupujacy_id);
 CREATE INDEX idx_transakcje_sprzedajacy  ON transakcje(sprzedajacy_id);
@@ -35,6 +34,8 @@ CREATE INDEX idx_aukcje_aktywne_koniec
     WHERE status = 'aktywna';
 
 -- Wyłanianie najwyższej oferty w aukcji: MAX(kwota) per aukcja_id.
+-- Kolumna wiodąca aukcja_id obsługuje też złączenia/weryfikację FK (osobny
+-- indeks na samym aukcja_id byłby redundantny).
 CREATE INDEX idx_oferty_aukcja_kwota
     ON oferty(aukcja_id, kwota DESC);
 

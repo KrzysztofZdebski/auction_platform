@@ -136,6 +136,9 @@ CREATE TABLE aukcje (
     -- Cena rezerwowa nie może być niższa niż wywoławcza.
     CONSTRAINT chk_aukcje_rezerwa
         CHECK (cena_minimalna IS NULL OR cena_minimalna >= cena_wywolawcza),
+    -- Cena bieżąca nigdy poniżej wywoławczej (start = wywoławcza, oferty tylko podbijają).
+    CONSTRAINT chk_aukcje_cena_aktualna
+        CHECK (cena_aktualna >= cena_wywolawcza),
     -- Zwycięzca może istnieć tylko dla aukcji zakończonej.
     CONSTRAINT chk_aukcje_zwyciezca
         CHECK (zwyciezca_id IS NULL OR status = 'zakonczona')

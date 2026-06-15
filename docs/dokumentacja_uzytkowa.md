@@ -119,9 +119,10 @@ CALL zakoncz_wygasle_aukcje();
 ### 3.7 Wystawienie recenzji
 
 ```sql
--- Tylko strona zakończonej transakcji może wystawić recenzję:
+-- Tylko strona zakończonej transakcji może wystawić recenzję
+-- (tu: sprzedający z transakcji 4 ocenia kupującego):
 INSERT INTO recenzje (transakcja_id, autor_id, oceniany_id, ocena, komentarz)
-VALUES (4, 22, 5, 5, 'Bardzo dobra współpraca.');
+VALUES (4, 5, 22, 5, 'Bardzo dobra współpraca.');
 ```
 
 ### 3.8 Raporty i statystyki

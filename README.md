@@ -1,29 +1,5 @@
 # Platforma aukcyjna produktów elektronicznych — projekt bazy danych
 
-Projekt zaliczeniowy z przedmiotu **Bazy Danych** (AGH). System bazodanowy
-(bez warstwy aplikacji) obsługujący platformę aukcyjną sprzętu elektronicznego,
-zrealizowany w **PostgreSQL 18**. Interakcja z bazą odbywa się przez `psql`
-lub pgAdmin.
-
-> **Zakres oceny:** projekt celuje w ocenę **4.5**. Świadomie pomijamy wymagania
-> na 5.0 (optymalizacja przez `EXPLAIN`, studium przypadku, obowiązkowa
-> prezentacja). Szczegółowe mapowanie kryteriów na artefakty znajduje się
-> w [`docs/dokumentacja_techniczna.md`](docs/dokumentacja_techniczna.md).
-
-## Co realizuje projekt
-
-| Kryterium (ocena) | Artefakt |
-|---|---|
-| 3.0 – podstawowe funkcje | rejestracja, wystawienie aukcji, licytacja, rozliczenie |
-| 3.0 – schemat min. 2NF | schemat od razu w **3NF** (`sql/01_schema.sql`) |
-| 3.0/4.0 – dokumentacja | `docs/dokumentacja_uzytkowa.md`, `docs/dokumentacja_techniczna.md` |
-| 3.5–4.0 – zaawansowane SQL | widoki + podzapytania + CTE rekurencyjne + funkcje okna (`sql/06`, `sql/09`) |
-| 3.5–4.0 – wyzwalacze + procedury | `sql/03`, `sql/04`, `sql/05` (PL/pgSQL) |
-| 3.5–4.0 – ERD i dok. techniczna | `docs/erd.md` (Mermaid) + `docs/slownik_danych.md` |
-| 4.5 – schemat 3NF | projekt logiczny w 3NF + uzasadnienie w dokumentacji |
-| 4.5 – transakcje + poziomy izolacji | `sql/05_procedury.sql` + `demo/` (scenariusze dwu-sesyjne) |
-| 4.5 – bezpieczeństwo (role) | `sql/07_role_uprawnienia.sql` + hashowanie haseł (`pgcrypto`) |
-
 ## Struktura repozytorium
 
 ```
